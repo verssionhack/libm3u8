@@ -74,7 +74,7 @@ pub mod tag_matcher {
     }
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 pub enum Tag {
     Basic(TagBasic),
     MediaSegment(TagMediaSegment),
@@ -83,14 +83,14 @@ pub enum Tag {
 }
 
 #[allow(non_camel_case_types)]
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone, Copy)]
 pub enum TagBasic {
     EXTM3U,
     EXT_X_VERSION(u64),
 }
 
 #[allow(non_camel_case_types)]
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 pub enum TagMediaSegment {
     EXTINF {
         duration: f64,
@@ -110,14 +110,14 @@ pub enum TagMediaSegment {
 }
 
 #[allow(non_camel_case_types)]
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone, Copy)]
 pub enum TagMediaPlayListPlayListType {
     VOD,
     EVENT,
 }
 
 #[allow(non_camel_case_types)]
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 pub enum TagMediaPlayList {
     EXT_X_TARGETDURATION(u64),
     EXT_X_MEDIA_SEQUENCE(u64),
@@ -128,7 +128,7 @@ pub enum TagMediaPlayList {
 }
 
 #[allow(non_camel_case_types)]
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 pub enum TagMasterPlayList {
     EXT_X_MEDIA(AttributeList),
     EXT_X_STREAM_INF(AttributeList),

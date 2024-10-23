@@ -14,7 +14,7 @@ pub mod attribute;
 mod tests {
     use chrono::NaiveDateTime;
 
-    use crate::m3u8::file::tag::{attribute::AttributeList, TagBasic, TagMasterPlayList, TagMediaPlayList, TagMediaSegment};
+    use crate::file::tag::{attribute::AttributeList, TagBasic, TagMasterPlayList, TagMediaPlayList, TagMediaSegment};
 
     #[test]
     fn test_parse_basic_tag() {
@@ -53,6 +53,6 @@ mod tests {
     #[test]
     fn test_parse_master_playlist_tag() {
 
-        //assert_eq!("#EXT-X-MEDIA:TYPE=VIDEO".try_into(), Ok(TagMasterPlayList::EXT_X_MEDIA(AttributeList::default())));
+        assert_eq!("#EXT-X-MEDIA:TYPE=VIDEO".try_into(), Ok(TagMasterPlayList::EXT_X_MEDIA([("TYPE", "VIDEO")].as_slice().try_into().unwrap())));
     }
 }

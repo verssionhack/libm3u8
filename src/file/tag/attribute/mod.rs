@@ -10,7 +10,7 @@ pub use r#error::*;
 
 #[cfg(test)]
 mod tests {
-    use crate::m3u8::file::tag::attribute::{attributevalue_matcher, Attribute, AttributeValue};
+    use crate::file::tag::attribute::{attributevalue_matcher, Attribute, AttributeValue};
 
     #[test]
     fn test_attribute_matchers() {
@@ -23,6 +23,7 @@ mod tests {
 
         assert_eq!("1234".try_into(), Ok(AttributeValue::Int(1234)));
         assert_eq!("0x1234".try_into(), Ok(AttributeValue::Hex(0x1234)));
+        println!("{}", AttributeValue::Hex(0x1234).to_string());
         assert_eq!("0.1234".try_into(), Ok(AttributeValue::Float(0.1234)));
         assert_eq!("\"1234\"".try_into(), Ok(AttributeValue::String("1234".to_owned())));
         assert_eq!("str1".try_into(), Ok(AttributeValue::EnumString("str1".to_owned())));

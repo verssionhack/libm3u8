@@ -22,6 +22,29 @@ impl TryFrom<&str> for Tag {
     }
 }
 
+impl Into<Tag> for TagBasic {
+    fn into(self) -> Tag {
+        Tag::Basic(self)
+    }
+}
+impl Into<Tag> for TagMediaSegment {
+    fn into(self) -> Tag {
+        Tag::MediaSegment(self)
+    }
+}
+impl Into<Tag> for TagMediaPlayList {
+    fn into(self) -> Tag {
+        Tag::MediaPlayList(self)
+    }
+}
+impl Into<Tag> for TagMasterPlayList {
+    fn into(self) -> Tag {
+        Tag::MasterPlayList(self)
+    }
+}
+
+
+
 
 
 impl TryFrom<&str> for TagBasic {

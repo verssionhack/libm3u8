@@ -70,7 +70,7 @@ pub mod attributevalue_matcher {
 }
 
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 pub enum AttributeValue {
     Int(u64),
     Hex(u64),
@@ -81,13 +81,13 @@ pub enum AttributeValue {
 }
 
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 pub struct Attribute {
     pub name: String,
     pub value: AttributeValue,
 }
 
-#[derive(Debug, PartialEq, Default)]
+#[derive(Debug, PartialEq, Default, Clone)]
 pub struct AttributeList {
     pub(super) _map: HashMap<String, AttributeValue>,
 }

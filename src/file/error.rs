@@ -1,3 +1,5 @@
+use std::io;
+
 use super::tag::{self, attribute};
 
 
@@ -10,6 +12,7 @@ pub enum Error {
     UnknownEnumValue(String),
     MisMatchTag,
     MissingNonOptionAttribute(&'static str),
+    Io(io::Error),
 }
 
 
@@ -23,5 +26,11 @@ impl From<tag::Error> for Error {
 impl From<attribute::Error> for Error {
     fn from(value: attribute::Error) -> Self {
         Self::Attribute(value)
+    }
+}
+
+impl From<io::Error> for Error {
+    fn from(value: io::Error) -> Self {
+        Self::Io(value)
     }
 }

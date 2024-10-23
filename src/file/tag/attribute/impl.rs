@@ -1,8 +1,6 @@
 use core::panic;
 use std::{collections::HashMap, fmt::{format, Display}, ops::Deref};
 
-use hex::ToHex;
-
 use super::{attributevalue_matcher, Attribute, AttributeList, AttributeValue};
 
 
@@ -165,7 +163,7 @@ impl ToString for AttributeValue {
                 v.to_string()
             }
             Self::Hex(v) => {
-                format!("0x{}", v.to_le_bytes().encode_hex::<String>())
+                format!("0x{:x}", v)
             }
             Self::Float(v) => {
                 v.to_string()
@@ -210,6 +208,20 @@ impl ToString for AttributeList {
     }
 }
 
+impl TryFrom<&[(&str, &str)]> for AttributeList {
+    type Error = super::Error;
+    fn try_from(value: &[(&str, &str)]) -> Result<Self, Self::Error> {
+        let mut ret = Self::default();
+
+        for (k, v) in value.iter() {
+            ret.insert(format!("{}={}", k, v).as_str().try_into()?);
+        }
+
+
+        Ok(ret)
+    }
+}
+
 impl AttributeList {
     pub fn new() -> Self {
         Self::default()
@@ -221,5 +233,9 @@ impl AttributeList {
 
     pub fn insert(&mut self, attribute: Attribute) -> Option<AttributeValue> {
         self._map.insert(attribute.name, attribute.value)
+    }
+
+    pub fn remove(&mut self, key: &str) -> Option<AttributeValue> {
+        self._map.remove(key)
     }
 }

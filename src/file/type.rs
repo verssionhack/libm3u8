@@ -1,17 +1,29 @@
+pub use master_playlist::MasterPlayList;
+pub use media_playlist::MediaPlaylist;
+
+
+pub mod media_playlist {
+    use crate::file::tag::{Tag, TagMediaPlayList, TagMediaSegment};
 
 
 
-#[derive(Debug)]
-pub enum File {
-    MasterPlayList(),
+    #[derive(Debug, Default, PartialEq, Clone)]
+    pub struct MediaPlaylist {
+        pub(crate) _media_segments: Vec<TagMediaSegment>,
+        pub(crate) _media_playlists: Vec<TagMediaPlayList>,
+        pub(crate) _urls: Vec<(String, Vec<TagMediaSegment>)>,
+        pub _other: Vec<Tag>,
+    }
 }
 
 
 pub mod master_playlist {
+    use crate::file::tag::{attribute::AttributeList, Tag};
+
 
 
     #[allow(non_camel_case_types)]
-    #[derive(Debug, Default)]
+    #[derive(Debug, Default, PartialEq, Clone, Copy)]
     pub enum HdcpLevel {
         TYPE_0,
         #[default]
@@ -19,7 +31,7 @@ pub mod master_playlist {
     }
 
     #[allow(non_camel_case_types)]
-    #[derive(Debug)]
+    #[derive(Debug, PartialEq, Clone, Copy)]
     pub enum VideoRange {
         SDR,
         PQ,
@@ -38,11 +50,22 @@ pub mod master_playlist {
         pub video_range: Option<VideoRange>,
         pub subtitles: Option<String>,
         pub closed_captions: Option<String>,
+        pub _other: AttributeList,
     }
 
+    #[derive(Debug, Default)]
+    pub struct ExtXIFrameStreamInf {
+        pub bandwidth: u64,
+        pub average_bandwidth: Option<u64>,
+        pub video_range: Option<VideoRange>,
+        pub codecs: Vec<String>,
+        pub resolution: (u64, u64),
+        pub uri: Option<String>,
+        pub _other: AttributeList,
+    }
 
     #[allow(non_camel_case_types)]
-    #[derive(Debug, Default)]
+    #[derive(Debug, Default, Clone, Copy)]
     pub enum ExtXMediaType {
         AUDIO,
         VIDEO,
@@ -65,13 +88,15 @@ pub mod master_playlist {
         pub instream_id: Option<String>,
         pub characteristics: Option<Vec<String>>,
         pub channels: Option<Vec<String>>,
+        pub _other: AttributeList,
     }
 
 
-    #[derive(Debug)]
+    #[derive(Debug, Default)]
     pub struct MasterPlayList {
-        pub ext_x_media: Option<ExtXMedia>,
-        pub urls: Vec<(String, ExtXStreamInf)>,
+        pub(crate) _ext_x_medias: Vec<ExtXMedia>,
+        pub(crate) _ext_x_i_frame_stream_medias: Vec<ExtXIFrameStreamInf>,
+        pub(crate) _urls: Vec<(String, ExtXStreamInf)>,
+        pub _other: Vec<Tag>,
     }
-
 }
