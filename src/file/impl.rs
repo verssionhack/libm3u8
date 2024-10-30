@@ -305,6 +305,10 @@ impl media_playlist::MediaPlaylist {
                     }
                 }
                 Tag::MediaPlayList(v) => {
+                    if url.is_some() {
+                        ret._urls.push((url.take().unwrap(), media_segments.clone()));
+                        media_segments.clear();
+                    }
                     ret._media_playlists.push(v);
                 }
                 _ => {
